@@ -12,3 +12,22 @@ To run this project, you will need the following:
 - Docker
 - Docker Compose
 - RabbitMQ
+
+## Setup
+
+### Activate the virtual environment
+
+1. **Create the virtual environment:**
+    ```sh
+    python -m venv .venv
+    ```
+
+2. **Activate the virtual environment:**
+    - On Windows:
+        ```sh
+        .venv\Scripts\activate
+        ```
+    - On macOS/Linux:
+        ```sh
+        source .venv/bin/activate
+        ```
