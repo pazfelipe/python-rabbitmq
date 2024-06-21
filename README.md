@@ -31,3 +31,10 @@ To run this project, you will need the following:
         ```sh
         source .venv/bin/activate
         ```
+
+### Start the Docker container
+
+1. **Build and run the RabbitMQ container using Docker Compose:**
+    ```sh
+    docker-compose up -d
+    ```
