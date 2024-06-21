@@ -32,3 +32,19 @@ class RabbitMQ:
             queue=queue_name, on_message_callback=callback, auto_ack=True
         )
         self.channel.start_consuming()
+
+    def publish(self, queue_name, message):
+        if not self.channel:
+            raise Exception(
+                "Connection is not established. Call 'connect' method first."
+            )
+        self.channel.queue_declare(queue=queue_name, durable=True)
+        self.channel.basic_publish(
+            exchange="",
+            routing_key=queue_name,
+            body=message,
+            properties=pika.BasicProperties(
+                delivery_mode=2,  # make message persistent
+            ),
+        )
+        print(f"Sent message to queue {queue_name}: {message}")
