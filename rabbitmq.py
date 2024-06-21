@@ -10,6 +10,7 @@ class RabbitMQ:
         self.port = int(os.getenv("RABBITMQ_PORT", 5672))
         self.connection = None
         self.channel = None
+        self.connect()
 
     def connect(self):
         credentials = pika.PlainCredentials(self.user, self.password)
@@ -25,9 +26,7 @@ class RabbitMQ:
 
     def consume(self, queue_name, callback):
         if not self.channel:
-            raise Exception(
-                "Connection is not established. Call 'connect' method first."
-            )
+            raise Exception("Connection is not established.")
         self.channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True
         )
@@ -35,9 +34,7 @@ class RabbitMQ:
 
     def publish(self, queue_name, message):
         if not self.channel:
-            raise Exception(
-                "Connection is not established. Call 'connect' method first."
-            )
+            raise Exception("Connection is not established.")
         self.channel.queue_declare(queue=queue_name, durable=True)
         self.channel.basic_publish(
             exchange="",
