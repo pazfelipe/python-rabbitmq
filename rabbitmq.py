@@ -22,3 +22,13 @@ class RabbitMQ:
     def close(self):
         if self.connection and not self.connection.is_closed:
             self.connection.close()
+
+    def consume(self, queue_name, callback):
+        if not self.channel:
+            raise Exception(
+                "Connection is not established. Call 'connect' method first."
+            )
+        self.channel.basic_consume(
+            queue=queue_name, on_message_callback=callback, auto_ack=True
+        )
+        self.channel.start_consuming()
